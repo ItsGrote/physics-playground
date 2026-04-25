@@ -10,7 +10,7 @@ int showMenu(){
     std::cout << "2 - Uniform Accelerated Rectilinear Motion\n";
     std::cout << "3 - Projectile\n";
     std::cout << "4 - Pendulum\n";
-    std::cout << "5 - Sprint\n";
+    std::cout << "5 - Spring\n";
     std::cout << "6 - Gravitation\n";
     std::cout << "7 - Collision\n";
     std::cout << "0 - Sair\n";
