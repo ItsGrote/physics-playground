@@ -10,7 +10,7 @@ public:
     void clear();
     void display();
 
-    void drawCircle(float x, float y);
+    void drawCircle(float x, float y, sf::Color color = sf::Color::White, float radius = 5.f);
     void drawLine(float oX, float oY, float x, float y);
 
 private:

@@ -3,6 +3,9 @@
 #include "simulations/mruv.h"
 #include "simulations/projectile.h"
 #include "simulations/pendulum.h"
+#include "simulations/spring.h"
+#include "simulations/gravitation.h"
+#include "simulations/collision.h"
 #include "app/runner.h"
 
 #include <iostream>
@@ -71,6 +74,8 @@ int main(){
         std::cin >> sim.g;
 
         runSimulation(sim, "PROJECTILE");
+
+        break;
     }
     case 4: {
         Pendulum sim;
@@ -93,7 +98,83 @@ int main(){
 
         break;
     }
-        
+    case 5: {
+        Spring sim;
+
+        std::cout << "Insert the mass of the particle\n";
+        std::cout << "m = ";
+        std::cin >> sim.m;
+
+        std::cout << "Insert the spring constant\n";
+        std::cout << "k = ";
+        std::cin >> sim.k;
+
+        sim.init(sim.m, sim.k);
+
+        runSimulation(sim, "SPRING");
+
+        break;
+    }
+    case 6: {
+        Simulation sim;
+        float m, M, r, v;
+
+        std::cout << "Insert the mass of the sun\n";
+        std::cout << "M = ";
+        std::cin >> M;
+
+        std::cout << "Insert the mass of the planet\n";
+        std::cout << "m = ";
+        std::cin >> m;
+
+        std::cout << "Insert the inicial velocity\n";
+        std::cout << "v0 = ";
+        std::cin >> v;
+
+        std::cout << "Insert the distance between the sun and the planet\n";
+        std::cout << "r = ";
+        std::cin >> r;
+
+        sim.init(M, m, v, r);
+
+        runSimulation(sim, "GRAVITATION");
+
+        break;
+    }
+    case 7: {
+        SimulationCol sim;
+        float m1, m2, v1, v2, e;
+
+        std::cout << "Insert the mass of the first particle\n";
+        std::cout << "m1 = ";
+        std::cin >> m1;
+
+        std::cout << "Insert the mass of the second particle\n";
+        std::cout << "m2= ";
+        std::cin >> m2;
+
+        std::cout << "Insert the inicial velocity of the first particle\n";
+        std::cout << "v1 = ";
+        std::cin >> v1;
+
+        std::cout << "Insert the velocity of the second particle\n";
+        std::cout << "v2 = ";
+        std::cin >> v2;
+
+        std::cout << "Insert the coefficient of restituition\n";
+        std::cout << "e = ";
+        std::cin >> e;
+
+        sim.init(m1, m2, v1, v2, e);
+
+        runSimulation(sim, "COLLISION");
+
+        break;
+    }
+    case 0:{
+        std::cout << "end\n";
+        break;
+    }   
     default:
         break;
     }

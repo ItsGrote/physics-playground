@@ -21,9 +21,10 @@ void SFMLRender::display(){
     return window.display();
 }
 
-void SFMLRender::drawCircle(float x, float y){
-    sf::CircleShape c (5.f);
+void SFMLRender::drawCircle(float x, float y, sf::Color color, float radius){
+    sf::CircleShape c (radius);
     c.setPosition(x, y);
+    c.setFillColor(color);
     window.draw(c);
 }
 
