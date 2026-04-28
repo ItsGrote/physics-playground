@@ -1,5 +1,6 @@
 #include "render/sfml_render.h"
 #include "gravitation.h"
+#include "core/vector2d.h"
 #include <cmath>
 #include <vector>
 
@@ -11,9 +12,9 @@ float Body::updateRadius(float mass){
         return 10.f;
 
     if ( mass < 100 )
-        return 15.f;
+        return 12.f;
 
-    return 25.f;
+    return 15.f;
 }
 
 void Simulation::init(float M, float m, float v, float r){
@@ -52,6 +53,12 @@ void Gravity::update(std::vector<Body>& bodies, float dt){
     
     float r = sqrt(r2);
 
+    Vector2D dir(dx / r, dy / r);
+
+    float Fg = 1 * planet.m * sun.m / r2;
+    planet.force = dir * Fg;
+
+
     float a = 1 * sun.m / (r2 * r);
 
     float ax = a * dx;
@@ -65,8 +72,21 @@ void Gravity::update(std::vector<Body>& bodies, float dt){
 
 }
 void Body::render(SFMLRender& r){
+    Vector2D pos(x, y);
+    Vector2D vel(vx, vy);
+    
+    float velScale = 10.f;
+    float forceScale = 100.f;
+    
+    Vector2D fFinal = (force * forceScale).clampMin(10);
+
+    Vector2D vScale = vel * velScale;
+    Vector2D vFinal = vScale.clampMin(10);
+
     r.drawCircle(x, y, color, radius);
     r.drawLine(400, 300, x, y);
+    r.drawVector(pos, vFinal);
+    r.drawVector(pos, fFinal);
 }
 
 void Simulation::update(float dt){

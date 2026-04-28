@@ -37,3 +37,47 @@ void SFMLRender::drawLine(float oX, float oY, float x, float y){
 
     window.draw(line, 2, sf::Lines);
 }
+
+sf::Color SFMLRender::getColorbyMagnitude(float mag){
+    float maxMag = 100.f;
+    float t = std::min (mag / maxMag, 1.f);
+
+    sf::Uint8 r = static_cast<sf::Uint8>(255 * t);
+    sf::Uint8 g = 0;
+    sf::Uint8 b = static_cast<sf::Uint8>(255 * (1 - t));
+
+    return sf::Color(r, g, b);
+}
+
+void SFMLRender::drawVector(const Vector2D& origin, const Vector2D& v){
+    float mag = v.magnitude();
+    sf::Color color = getColorbyMagnitude(mag);
+
+    Vector2D end = origin + v;
+
+    sf::Vertex line[] = {
+        sf::Vertex(sf::Vector2f(origin.x, origin.y), color),
+        sf::Vertex(sf::Vector2f(end.x, end.y), color)
+    };
+
+    window.draw(line, 2, sf::Lines);
+
+    Vector2D dir = v.normalized();
+
+    Vector2D perp(-dir.y, dir.x);
+
+    float arrowSize = 10.f; 
+
+    Vector2D left  = end - dir * arrowSize + perp * (arrowSize * 0.5f);
+    Vector2D right = end - dir * arrowSize - perp * (arrowSize * 0.5f);
+
+    sf::Vertex arrow[] = {
+        sf::Vertex(sf::Vector2f(end.x, end.y), color),
+        sf::Vertex(sf::Vector2f(left.x, left.y), color),
+
+        sf::Vertex(sf::Vector2f(end.x, end.y), color),
+        sf::Vertex(sf::Vector2f(right.x, right.y), color)
+    };
+
+    window.draw(arrow, 4, sf::Lines);
+}

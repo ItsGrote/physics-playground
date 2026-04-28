@@ -15,5 +15,7 @@ private:
     float time{0.f};
     float x{0.f};
     float y{0.f};
+    float vx{0.f};
+    float vy{0.f};
 
 };

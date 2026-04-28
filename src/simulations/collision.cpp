@@ -1,5 +1,6 @@
 #include "render/sfml_render.h"
 #include "simulations/collision.h"
+#include "core/vector2d.h"
 #include<vector>
 #include<cmath>
 
@@ -28,7 +29,7 @@ void SimulationCol::init(float m1, float m2, float v1, float v2, float e){
     secondBody.m = m2;
     secondBody.v = v2;
     secondBody.x0 = 400.0f;
-    secondBody.color = sf::Color::Blue;
+    secondBody.color = sf::Color::Green;
     secondBody.radius = secondBody.updateRadius(m2);
 
     collision.e = e;
@@ -68,7 +69,16 @@ void Collision::update(std::vector<Mass>& bodies, float dt){
 }
 
 void Mass::render(SFMLRender& r){
+    Vector2D pos(x0, 309);
+    Vector2D vel(v, 0);
+
+    float scale = 10.f;
+
+    Vector2D vScaled = vel * scale;
+    Vector2D vFinal = vScaled.clampMin(10);
+
     r.drawCircle(x0, 300, color, radius);
+    r.drawVector(pos, vFinal);
 }
 
 void SimulationCol::update(float dt){

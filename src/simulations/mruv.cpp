@@ -1,5 +1,6 @@
 #include "simulations/mruv.h"
 #include "render/sfml_render.h"
+#include "core/vector2d.h"
 
 void MRUV::update(float dt){
     time += dt;
@@ -7,5 +8,15 @@ void MRUV::update(float dt){
 }
 
 void MRUV::render(SFMLRender& r){
-    return r.drawCircle(x, 300.f);
+    Vector2D pos(x, 302.f);
+    Vector2D vel(v0 + a * time, 0);
+
+    float scale = 2.f;
+
+    Vector2D vScaled = vel * scale;
+    Vector2D vFinal = vScaled.clampMin(10);
+
+    r.drawCircle(x, 295.f);
+    r.drawVector(pos, vFinal);
+
 }

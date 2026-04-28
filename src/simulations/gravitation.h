@@ -1,4 +1,5 @@
 #include "render/sfml_render.h"
+#include "core/vector2d.h"
 #include <vector>
 #include <cmath>
 
@@ -8,6 +9,8 @@ public:
     float vx, vy;
     float m;
     float radius;
+
+    Vector2D force{0.f, 0.f};
     sf::Color color;
 
     float updateRadius(float mass);
@@ -17,6 +20,7 @@ public:
 class Gravity{
 public:
     void update(std::vector<Body>& bodies, float dt);
+
 
 };
 

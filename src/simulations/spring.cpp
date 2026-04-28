@@ -1,6 +1,7 @@
 #include<cmath>
 #include "simulations/spring.h"
 #include "render/sfml_render.h"
+#include "core/vector2d.h"
 
 
 float Spring::updateRadius(float mass){
@@ -37,6 +38,16 @@ void Spring::update(float dt){
 }
 
 void Spring::render(SFMLRender& r){
+    Vector2D pos(400, x);
+    Vector2D acc(0, w * w * (400 - x));
+
+
+    float scale = 0.2f;
+
+    Vector2D accScaled = acc * scale;
+    Vector2D accFinal = accScaled.clampMin(10);
+
     r.drawLine(400, 250, 400, x);
     r.drawCircle(400, x, sf::Color::White, radius);
+    r.drawVector(pos, accFinal);
 }
